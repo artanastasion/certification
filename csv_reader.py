@@ -12,7 +12,6 @@ class CSVChunkReader:
     def __iter__(self) -> Iterator[list[dict[str, str]]]:
         with self.file_path.open("r", encoding="utf-8") as f:
             reader = csv.DictReader(f)
-            # skip already processed rows
             for _ in range(self.start_offset):
                 next(reader, None)
 
