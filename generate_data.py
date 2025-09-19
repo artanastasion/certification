@@ -10,6 +10,9 @@ CLIENT_PREFIX = "CUST"
 STATUS_WEIGHTS = {"completed": 80, "failed": 20}
 
 def generate_payments():
+    """Генератор датасета
+    """
+
     print(f"Генерация {NUM_ROWS} записей...")
     start_time = datetime(2024, 1, 1)
     with open(OUTPUT_FILE, "w", newline="", encoding="utf-8") as f:

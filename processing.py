@@ -8,7 +8,41 @@ from csv_reader import CSVChunkReader
 
 
 class PaymentProcessor:
+    """
+        Класс, реализующий ETL-пайплайн постраничной обработки платежей из CSV.
+        
+        Workflow:
+        1. Загружает offset (смещение) для возобновляемой обработки.
+        2. Читает CSV по чанкам, начиная с offset.
+        3. Для каждой строки выполняет:
+        - валидацию (Validator)
+        - конвертацию суммы в RUB (CurrencyConverter)
+        - обновление агрегатов (Storage)
+        - логирование ошибок (Logger)
+        4. После каждого чанка:
+        - сохраняет агрегаты (Storage)
+        - обновляет offset (OffsetManager)
+        - логирует прогресс (Logger)
+
+        Idempotency:
+        - Благодаря offset, строки не будут обработаны повторно.
+    """
+    
     def __init__(self, config: Config) -> None:
+
+        """
+        Инициализирует процессор платежей и все зависимости.
+
+        Args:
+            config (Config): объект конфигурации со всеми параметрами:
+                - input_file: путь к CSV с платежами
+                - chunk_size: размер чанка (batch) в строках
+                - output_file: путь к агрегатам (JSON/SQLite)
+                - offset_file: путь к файлу offset
+                - SUPPORTED_CURRENCIES: список поддерживаемых валют
+                - RATES: словарь валютных курсов
+        """
+        
         self.config = config
         self.offset_mgr = OffsetManager(config.offset_file)
         self.logger = Logger()
@@ -17,6 +51,8 @@ class PaymentProcessor:
         self.storage = Storage(config.output_file)
 
     def process(self) -> None:
+        """Запускает обработку CSV по чанкам.
+        """
         start_offset = self.offset_mgr.load()
         reader = CSVChunkReader(self.config.input_file, self.config.chunk_size, start_offset)
         aggregator = self.storage.load()
