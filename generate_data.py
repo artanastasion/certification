@@ -9,6 +9,7 @@ CATEGORIES = ["subscription", "transfer", "shopping", "refund", "service"]
 CLIENT_PREFIX = "CUST"
 STATUS_WEIGHTS = {"completed": 80, "failed": 20}
 
+
 def generate_payments():
     """Генератор датасета
     """
@@ -24,7 +25,7 @@ def generate_payments():
             client_id = f"{CLIENT_PREFIX}{random.randint(1000, 9999)}"
             amount = round(random.uniform(10.0, 5000.0), 2)
             currency = random.choice(CURRENCIES)
-            timestamp = start_time + timedelta(seconds=random.randint(0, 365*24*3600))
+            timestamp = start_time + timedelta(seconds=random.randint(0, 365 * 24 * 3600))
             status = random.choices(
                 list(STATUS_WEIGHTS.keys()),
                 weights=list(STATUS_WEIGHTS.values())
@@ -45,6 +46,7 @@ def generate_payments():
                 print(f"{i} записей сгенерировано...")
 
     print(f"Файл {OUTPUT_FILE} успешно создан.")
+
 
 if __name__ == "__main__":
     generate_payments()

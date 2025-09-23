@@ -7,14 +7,6 @@ class CSVChunkReader:
     """Итератор для построчного чтения CSV-файла по чанкам"""
     
     def __init__(self, file_path: Path, chunk_size: int, start_offset: int = 0) -> None:
-        """_summary_
-        
-
-        Args:
-            file_path (Path): _description_
-            chunk_size (int): _description_
-            start_offset (int, optional): _description_. Defaults to 0.
-        """
 
         self.file_path = file_path
         self.chunk_size = chunk_size

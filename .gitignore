@@ -1,2 +1,6 @@
 .venv
 .idea
+payments.csv
+offset.txt
+progress.log
+aggregates.json

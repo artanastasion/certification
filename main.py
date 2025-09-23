@@ -1,7 +1,34 @@
 from config import Config
 from processing import PaymentProcessor
-
+from loguru import logger
 import argparse
+import sys
+
+logger.remove()
+
+logger.add(
+    "errors.log",
+    level="ERROR",
+    format="{time} | Line {extra[line]}: {message}",
+    enqueue=True,
+    backtrace=True,
+    diagnose=False
+)
+
+logger.add(
+    "progress.log",
+    level="INFO",
+    format="{time} | {message}",
+    filter=lambda record: record["level"].name == "INFO",
+    enqueue=True
+)
+
+logger.add(
+    sys.stdout,
+    level="INFO",
+    format="{message}",
+    filter=lambda record: record["level"].name == "INFO"
+)
 
 parser = argparse.ArgumentParser(description="Process payments CSV in chunks.")
 parser.add_argument("--input", required=True)
