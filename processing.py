@@ -47,7 +47,6 @@ class PaymentProcessor:
         self.offset_mgr = OffsetManager(config.offset_file)
         self.validator = Validator(config.SUPPORTED_CURRENCIES)
         self.converter = CurrencyConverter(config.RATES)
-        # Storage теперь — sharded JSON storage
         self.storage = Storage(config.output_file)
 
     def process(self) -> None:

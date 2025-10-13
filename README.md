@@ -34,7 +34,7 @@ FilesCertification/
 CLI-интерфейс для запуска обработки CSV:
 
 ```bash
-python main.py --input payments.csv --chunk-size 10000 --output-aggregates aggregates.json --offset-file offset.txt
+python main.py --input payments.csv --chunk-size 10000 --output-aggregates aggregates.ndjson --offset-file offset.txt
 ```
 
 ### processing.py
@@ -49,7 +49,7 @@ python main.py --input payments.csv --chunk-size 10000 --output-aggregates aggre
 
 ### storage.py
 
-`Storage` для безопасного сохранения агрегатов в **один JSON-файл**:
+`Storage` для безопасного сохранения агрегатов в **один NDJSON-файл**:
 
 * Поддержка атомарных записей
 * Поддержка больших файлов без полной загрузки в память
@@ -120,9 +120,9 @@ python generate_data.py
 3. Запустить обработку:
 
 ```bash
-python main.py --input payments.csv --chunk-size 10000 --output-aggregates aggregates.json --offset-file offset.txt
+python main.py --input payments.csv --chunk-size 10000 --output-aggregates aggregates.ndjson --offset-file offset.txt
 ```
 
-4. Проверить `aggregates.json`, `progress.log`, `errors.log`.
+4. Проверить `aggregates.ndjson`, `progress.log`, `errors.log`.
 
 ---
