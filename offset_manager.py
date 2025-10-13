@@ -39,7 +39,7 @@ class OffsetManager:
             tf.flush()
             os.fsync(tf.fileno())
             tmpname = tf.name
-        # atomic replace
+
         os.replace(tmpname, str(self.file_path))
 
     def save(self, offset: int) -> None:

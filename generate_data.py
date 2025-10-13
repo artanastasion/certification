@@ -2,7 +2,7 @@ import csv
 import random
 from datetime import datetime, timedelta
 
-NUM_ROWS = 12_000_000
+NUM_ROWS = 12_000
 OUTPUT_FILE = "payments.csv"
 CURRENCIES = ["USD", "EUR", "GBP", "RUB"]
 CATEGORIES = ["subscription", "transfer", "shopping", "refund", "service"]

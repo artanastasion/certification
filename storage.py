@@ -1,8 +1,6 @@
 import json
 from pathlib import Path
 from tempfile import NamedTemporaryFile
-from typing import Any
-from loguru import logger
 
 
 class Storage:
@@ -18,7 +16,6 @@ class Storage:
     def apply_batch(self, aggregator) -> None:
         batch_clients = aggregator.clients
 
-        # создаём временный файл в той же папке, что self.file_path
         with NamedTemporaryFile("w", delete=False, dir=self.file_path.parent, encoding="utf-8") as tmp:
             seen_clients = set()
 
@@ -42,10 +39,9 @@ class Storage:
                         json.dumps({"client_id": cid, **data}, ensure_ascii=False) + "\n"
                     )
 
-        Path(tmp.name).replace(self.file_path)  # теперь атомарно и безопасно
+        Path(tmp.name).replace(self.file_path)
 
         self._update_categories(aggregator.categories)
-
 
     def _update_categories(self, categories: dict[str, float]) -> None:
         cat_file = self.file_path.with_name("categories.ndjson")
